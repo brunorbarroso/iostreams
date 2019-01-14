@@ -2,14 +2,15 @@ import mysql.connector
 from mysql.connector import Error
 from mysql.connector import errorcode
 from app import helper as h
+from app import config
 
 class Database:
 
-    def __init__(self, databaseUser, databasePassword, databaseHost, databaseName):
-        self.user       = databaseUser
-        self.password   = databasePassword
-        self.host       = databaseHost
-        self.database   = databaseName
+    def __init__(self):
+        self.user       = config.database_user
+        self.password   = config.database_password
+        self.host       = config.database_host
+        self.database   = config.database_name
     
     def connector(self):
         self.connection = mysql.connector.connect(user=self.user, password=self.password, host=self.host, database=self.database, charset="utf8")
