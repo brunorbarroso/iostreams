@@ -1,5 +1,6 @@
 import random
 import time
+
 from app import constant as c
 
 def logger( message, modo='info' ):
@@ -12,8 +13,9 @@ def queryInsertInvoiceItemTemplate():
     return """ INSERT INTO `invoice_items` (`id`, `invoice_id`, `content`) VALUES (null,%s, %s)"""
 
 def generateIdentify():
-    logger(f"Generate identify") # logging activities
-    return str( random.choice(c.STRING_LETTERS) + random.choice(c.STRING_LETTERS) + str(time.time()).replace('.', '') ).upper()
+    unique = str( random.choice(c.STRING_LETTERS) + random.choice(c.STRING_LETTERS) + str(time.time()).replace('.', '') ).upper()
+    logger(f"Generate identify: {unique}") # logging activities
+    return unique
 
 def splitList( lists, qty ):
     groups = {}
@@ -27,11 +29,11 @@ def splitList( lists, qty ):
             items.append( lists[indexLists] ) # adds the positions of the current block
             if item == (qtyItemsByList-1) and indexLists > 0 and group < (qty-1): # adds the first position of the next block
                 items.append( lists[indexLists+1] )
-            logger(f"Group of intervals {group+1}/{qty} - item {item+1}/{qtyItemsByList} - {lists[indexLists]} - {indexLists}") # logging activities
+            logger(f"Create batch of intervals {group+1}/{qty} - item {item+1}/{qtyItemsByList} - {lists[indexLists]} - {indexLists}") # logging activities
             indexLists += 1
         groups[group] = items
     return groups
 
 def replaceFilename( filename ):
-      array = filename.split('\\')
+      array = filename.split( c.DELIMITER_PATH )
       return array[len(array)-1]
