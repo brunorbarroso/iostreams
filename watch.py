@@ -12,8 +12,8 @@ class handleWatchFileSystem( PatternMatchingEventHandler ):
     def process(self, event):
         # the file will be processed there
         if event.event_type == 'created':
+            h.logger(f"File {event.src_path} has been added.")  # print now only for degug
             main.run( event.src_path )
-            h.logger(f"File {event.src_path} has been {event.event_type}.")  # print now only for degug
 
     def on_modified(self, event):
         self.process(event)
