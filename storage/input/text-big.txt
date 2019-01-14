@@ -1,8 +1,5 @@
 firstName|lastName|birthday|
 1Bruno|Barroso|25
-2Bruno|Barroso|25
-3Bruno|Barroso|25
-4Bruno|Barroso|25
 5Bruno|Barroso|25
 firstName|lastName|birthday|
 6Bruno|Barroso|25
@@ -13,7 +10,6 @@ firstName|lastName|birthday|
 firstName|lastName|birthday|
 11Bruno|Barroso|25
 12Bruno|Barroso|25
-13Bruno|Barroso|25
 14Bruno|Barroso|25
 15Bruno|Barroso|25
 firstName|lastName|birthday|
@@ -110864,13 +110860,13 @@ firstName|lastName|birthday|
 6Bruno|Barroso|25
 7Bruno|Barroso|25
 8Bruno|Barroso|25
-9Bruno|Barroso|25
-10Bruno|Barroso|25
 firstName|lastName|birthday|
 11Bruno|Barroso|25
 12Bruno|Barroso|25
 13Bruno|Barroso|25
 14Bruno|Barroso|25
+asdasd
+asdasd
 15Bruno|Barroso|25
 firstName|lastName|birthday|
 16Bruno|Barroso|25
