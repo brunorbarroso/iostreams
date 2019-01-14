@@ -7,6 +7,7 @@ from app import constant as c
 from app import helper as h
 from app import database as db
 from app import helper
+from app import config
 
 ## 
 # Class responsable for read files, extract blocks by interval and insert in database
@@ -14,28 +15,28 @@ from app import helper
 class IOStreams:
 
     def __init__( self ):
-        self.database = db.Database(    databaseUser="root", 
-                                        databasePassword="", 
-                                        databaseHost="127.0.0.1", 
-                                        databaseName="parse")
+        self.database = db.Database(    databaseUser=config.database_user, 
+                                        databasePassword=config.database_password, 
+                                        databaseHost=config.database_host, 
+                                        databaseName=config.database_name)
     
     def getBlockIntervalPositions( self, fileName ):
         positions = list()
         fileName = c.PATH_INPUT+fileName
         with open(fileName) as f:
             for num, line in enumerate(f, 1):
-                if c.STRING_BLOCK_SEPARATOR in line:
+                if config.STRING_BLOCK_SEPARATOR in line:
                     positions.append(str(num))
             positions.append(str(num))
         return positions
     
-    def createFile( self, content, rootPath=c.PATH_OUTPUT, ext=c.EXT_DEFAULT_OUTPUT ):    
+    def createFile( self, content, rootPath=c.PATH_OUTPUT, ext=config.EXT_DEFAULT_OUTPUT ):    
         pathAndFileName= rootPath + h.generateIdentify() + ext
         with open(pathAndFileName, 'w+') as f:
             for item in content:
                 f.write("%s\n" % item)
         f.close
-        h.logger(f"Created file")
+        h.logger(f"Created file {pathAndFileName}")
     
     def register( self, content ):
         invoiceId = self.database.execute( h.queryInsertInvoiceTemplate(), (h.generateIdentify().upper(), "waiting"))
@@ -55,7 +56,7 @@ class IOStreams:
                     contentBlock.append(line)
         return contentBlock
     
-    def getContentFileByInterval( self, fileName, positions, maxLine ):
+    def getContentFileByInterval( self, fileName, positions, maxLine, batch=1 ):
         blocks = list()
         running = True
         listCycle = cycle(positions)
@@ -67,6 +68,6 @@ class IOStreams:
                 block = self.extractContentBlockFileByInterval( fileName, start=thisItem, end=nextItem )
                 self.register( content=block )
                 blocks.append( block )
-                h.logger(f"Capture Invoice Block #{str(item)}/{maxLine}: StartLine: {str(thisItem)} - EndLine: {str(nextItem)}")
+                h.logger(f"Extracted the file detail #{str(item+1)}/{maxLine} of batch {batch}: StartLine: {str(thisItem)} - EndLine: {str(nextItem)}")
                 break
         return blocks
