@@ -13,10 +13,7 @@ def print_time( threadName, delay):
 try:
    _thread.start_new_thread( print_time, ("Thread-1", 2 ) )
    _thread.start_new_thread( print_time, ("Thread-2", 4 ) )
-   con.connect( user='root', 
-                password='',
-                host='127.0.0.1',
-                database='parse')
+  
 except:
    print("Error: unable to start thread")
 
