@@ -1,6 +1,7 @@
 import mysql.connector
 from mysql.connector import Error
 from mysql.connector import errorcode
+from app import helper as h
 
 class Database:
 
@@ -19,14 +20,14 @@ class Database:
             self.connector()
             self.cursor.execute(query, params)
             self.connection.commit()
-            print("Record successfully into table")
+            h.logger(f"Record successfully into table. ID: {self.cursor.lastrowid}")
             return self.cursor.lastrowid
         except mysql.connector.Error as error :
             self.connection.rollback() #rollback if any exception occured
-            print("Failed record into table {}".format(error))
+            h.logger(f"Failed record into table {format(error)}")
         finally:
             #closing database connection.
             if(self.connection.is_connected()):
                 self.cursor.close()
                 self.connection.close()
-                print("MySQL connection is closed")
+                h.logger("MySQL connection is closed")
