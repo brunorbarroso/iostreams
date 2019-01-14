@@ -15,10 +15,7 @@ from app import config
 class IOStreams:
 
     def __init__( self ):
-        self.database = db.Database(    databaseUser=config.database_user, 
-                                        databasePassword=config.database_password, 
-                                        databaseHost=config.database_host, 
-                                        databaseName=config.database_name)
+        self.database = db.Database()
     
     def getBlockIntervalPositions( self, fileName ):
         positions = list()
