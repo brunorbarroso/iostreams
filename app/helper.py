@@ -1,6 +1,5 @@
 import random
 import time
-
 from app import constant as c
 
 def logger( message, modo='info' ):
@@ -34,6 +33,6 @@ def splitList( lists, qty ):
         groups[group] = items
     return groups
 
-def replaceFilename( filename ):
-      array = filename.split( c.DELIMITER_PATH )
+def removePath( pathAndFilename ):
+      array = pathAndFilename.split( c.DELIMITER_PATH )
       return array[len(array)-1]

@@ -1,4 +1,5 @@
 import sys
+import os
 import time
 from itertools import cycle
 
@@ -20,11 +21,16 @@ class IOStreams:
     def getBlockIntervalPositions( self, fileName ):
         positions = list()
         fileName = c.PATH_INPUT+fileName
-        with open(fileName) as f:
-            for num, line in enumerate(f, 1):
-                if config.STRING_BLOCK_SEPARATOR in line:
+        STRING_BLOCK_SEPARATOR = config.STRING_BLOCK_SEPARATOR
+        if config.STRING_BLOCK_SEPARATOR == None:
+            h.logger(f"Unidentified environment variables")
+        else:
+            if os.path.isfile(fileName):
+                with open(fileName) as f:
+                    for num, line in enumerate(f, 1):
+                        if STRING_BLOCK_SEPARATOR in line:
+                            positions.append(str(num))
                     positions.append(str(num))
-            positions.append(str(num))
         return positions
     
     def createFile( self, content, rootPath=c.PATH_OUTPUT, ext=config.EXT_DEFAULT_OUTPUT ):    
